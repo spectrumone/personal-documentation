@@ -16,8 +16,7 @@ server {
     listen   80; #will listen to requests from port 80. ex: 127:0.0.1:80
     server_name .crescent-moon.tk; #will only be considered if there are multiple server block directive lisening to 80. If nothing matches, nginx will get the first written server block or the one with a default_server.
 ​
-    client_max_body_size 4G; #the default is 1mb which It is believed to be reasonably high for non-upload use cases, and 
-reasonably low to prevent DoS by uploading large files. Currently set to 4G which I think is bad.
+    client_max_body_size 4G; #the default is 1mb which It is believed to be reasonably high for non-upload use cases, and reasonably low to prevent DoS by uploading large files. Currently set to 4G which I think is bad.
 ​
     access_log /webapps/crescent_moon/logs/nginx-access.log;
     error_log /webapps/crescent_moon/logs/nginx-error.log;
