@@ -95,7 +95,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 ]
 ```
-###views.py
+##views.py
 * use **transanctions** whenever creating, updating, or deleting something from the database. This maintains database integrity.
 ```python
 from django.db import transaction
@@ -106,7 +106,7 @@ with transaction.atomic():
     flavor.save()
 ```
 
-###Queries
+##Queries
 * On one-to-many relationships, query like its an attribute to get the object:
 ```python
 e = Entry.objects.get(id=2)
@@ -158,6 +158,6 @@ e = Entry.objects.select_related('blog').get(id=5)
 b = e.blog
 ```
 
-###Source
+##Source
 [http://www.twoscoopspress.com/](http://www.twoscoopspress.com/)<br/>
 [https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)
