@@ -106,5 +106,58 @@ with transaction.atomic():
     flavor.save()
 ```
 
+###Queries
+* On one-to-many relationships, query like its an attribute to get the object:
+```python
+e = Entry.objects.get(id=2)
+e.blog = some_blog
+e.save()
+```
+* On many-to-one relationships, you query the `many` Manager with the name `entry_set`
+```python
+b = Blog.objects.get(id=1)
+b.entry_set.all() # Returns all Entry objects related to Blog.
+b.entry_set is a Manager that returns QuerySets.
+b.entry_set.count()
+```
+* On many-to-many relationships, the model that defines the `ManytoManyField` uses attribute name to get the Manager but the reverse uses model name + `_set`.
+```python
+e = Entry.objects.get(id=3)
+e.authors.all() # Returns all Author objects for this Entry.
+e.authors.count()
+
+a = Author.objects.get(id=5)
+a.entry_set.all() # Returns all Entry objects for this Author.
+```
+* On one-to-one relationships, the model that defines the OneToOneField uses attribute_name to get the object but the other model will use the model name to get an object (on a Manager like the previous examples).
+```python
+ed = EntryDetail.objects.get(id=2)
+ed.entry # Returns the related Entry object.
+
+e = Entry.objects.get(id=2)
+e.entrydetail # returns the related EntryDetail object
+```
+* Use select_related lookup to lessen database queries.
+```python
+'''Standard Lookup'''
+
+# Hits the database.
+e = Entry.objects.get(id=5)
+
+# Hits the database again to get the related Blog object.
+b = e.blog
+```
+```python
+'''Lookup with select_related'''
+
+# Hits the database.
+e = Entry.objects.select_related('blog').get(id=5)
+
+# Doesn't hit the database, because e.blog has been prepopulated
+# in the previous query.
+b = e.blog
+```
+
 ###Source
 [http://www.twoscoopspress.com/](http://www.twoscoopspress.com/)
+[https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)
