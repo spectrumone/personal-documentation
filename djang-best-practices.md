@@ -105,6 +105,18 @@ with transaction.atomic():
     flavor.latest_status = timezone.now()
     flavor.save()
 ```
+* On create an object and saving it. Use the create method of the object manager instead.
+```python
+'''Standard way'''
+
+e = Entry(**kwargs)
+e.save
+```
+```python
+'''Better way'''
+
+Entry.objects.create(**kwargs)
+```
 
 ##Queries
 * On one-to-many relationships, query like its an attribute to get the object:
