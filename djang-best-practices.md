@@ -119,13 +119,13 @@ Entry.objects.create(**kwargs)
 ```
 
 ##Queries
-* On one-to-many relationships, query like its an attribute to get the object:
+* On many-to-one relationships, query like its an attribute to get the object:
 ```python
 e = Entry.objects.get(id=2)
 e.blog = some_blog
 e.save()
 ```
-* On many-to-one relationships, you query the `many` Manager with the name `entry_set`
+* On one-to-many relationships, you query the `many` Manager with the name `entry_set`
 ```python
 b = Blog.objects.get(id=1)
 b.entry_set.all() # Returns all Entry objects related to Blog.
