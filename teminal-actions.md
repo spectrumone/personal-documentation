@@ -15,4 +15,10 @@ rsync -avP <public address of instance e.g.: dog.com>:<full path of file or fold
 ```bash
 rsync -avP <full path of file or folder to be uploaded> <public addess of instance>:<upload path>
 ```
-* same explanations as above
+same explanations as above.
+
+###Open the folder of the current path of the terminal (ubuntu)
+```bash
+nautilus --browser ~/some/directory
+```
+Rather simple but I keep forgetting.
