@@ -1,4 +1,4 @@
-#Terminal Actions
+#Common Commands
 <i>collection of terminal commands I keep forgetting and always look up the internt</i>
 
 ###Download from another server
@@ -22,3 +22,22 @@ same explanations as above.
 nautilus --browser ~/some/directory
 ```
 Rather simple but I keep forgetting.
+
+###Backup and restore dump to a new database (PostgreSQL)
+```bash
+pg_dump <db name> > <outfile>
+createdb <new db name>
+psql <new db name> <outfile>
+```
+This only works if the current user is the correct db owner (If the current ubuntu user has the same name as the db user that owns the postgres db. If not, run `sudo su - postgres` to turn the curent user the  postgres root superuser.
+
+###Backup and restore dump to a new database (Django methods)
+```bash
+./manage.py dumpdata -o <outfile>
+```
+assuming youre now on youre new machine with a clean db
+```bash
+./manage.py migrate
+./manage.py loaddata <outfile>
+```
+This maybe heavily inefficient and buggy since loaddata is, i believe, designed for fixtures only.
