@@ -9,7 +9,6 @@ rsync -avP <public address of instance e.g.: dog.com>:<full path of file or fold
 * `-a` a summary of a bunch of switches that you normally will want
 * `-v` verbose
 * `-P` to show the progress
-* 
 
 ###Upload to a server
 ```bash
