@@ -16,7 +16,7 @@ git commit --amend --date=now
 
 ###Revert local to a previous commit
 ```bash
-git commit reset --hard <commit hash>
+git reset --hard <commit hash>
 ```
 this will change all the files back to how they use to be on specified commit. It won't delete files however.
 ```bash
