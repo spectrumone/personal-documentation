@@ -40,3 +40,20 @@ assuming youre now on youre new machine with a clean db
 ./manage.py loaddata <outfile>
 ```
 This maybe heavily inefficient and buggy since loaddata is, i believe, designed for fixtures only.
+
+###Backup a db with a password and then restore using Django
+```bash
+PGPASSWORD=<postgres user password> pg_dump -h127.0.0.1 -Upostgres -Ocx <db name> > /<path>/<name>-`date +%Y%m%d%H%M`.sql
+```
+  * The default is to perform local peer authentication based on your current username. If you would like to use a password you must specify the hostname with `-h localhost`.
+  * `-c` Output commands to clean (drop) database objects before you create or restore the plain text dumb.
+  * `-x` Prevent dumping of access privileges
+  * `-O` To make a script that can be restored by any user, but will give that user ownership of all the objects.
+  * `-U` User name to connect as. The password is the password of the user.
+
+```bash
+createdb <new db name> #set this db in the django settings.
+cat <dump file> | ./manage.py dbshell
+```
+  * Runs the command-line client for the database engine specified in your ENGINE setting, with the connection parameters specified in your USER, PASSWORD, etc., settings.
+  * For PostgreSQL, this runs the psql command-line client.
