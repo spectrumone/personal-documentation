@@ -56,7 +56,7 @@ urlpatterns = [
 ```
 
 ###base.html
-Fref button for the social auth. After authorization, will redirect to request.path i think or the redirect uri specified on registering the facebook api.
+Href button for the social auth. After authorization, will redirect to request.path i think or the redirect uri specified on registering the facebook api.
 ```python
 <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"> 
 ```
