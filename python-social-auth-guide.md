@@ -6,7 +6,7 @@
 * on the redirect uri, you cant use <b>127.0.0.1:8000</b> so for testing it locally, use <b>localhost:8000</b> instead.
 
 ###settings.py
-Most of tese are not well documented in the site.
+Most of these are not well documented in the site.
 ```python
 SOCIAL_AUTH_USER_MODEL = 'django.contrib.auth.models.User' # used to point where the User model is. Needed for creating users.
 SOCIAL_AUTH_FACEBOOK_KEY = ''  # from facebook app
