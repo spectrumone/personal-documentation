@@ -57,3 +57,6 @@ cat <dump file> | ./manage.py dbshell
 ```
   * Runs the command-line client for the database engine specified in your ENGINE setting, with the connection parameters specified in your USER, PASSWORD, etc., settings.
   * For PostgreSQL, this runs the psql command-line client.
+
+###Create automated backups
+  This is fairly simple. Just run a script or a command in the crontab that does backups. Preferrably there should a script for daily backups and hourly backups. An example of a backup command would be the one db backup line on top.
