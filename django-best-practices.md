@@ -119,13 +119,24 @@ Entry.objects.create(**kwargs)
 ```
 
 ##Queries
+
+Sample Scenario:
+```python
+class Blog(models.Model):
+    title = models.CharField(max_length=128)
+    
+class Entry(models.Model):
+    blog = models.ForeignKey(Blog)
+```
+
 * On many-to-one relationships, query like its an attribute to get the object:
 ```python
 e = Entry.objects.get(id=2)
 e.blog = some_blog
 e.save()
 ```
-* On one-to-many relationships, you query the `many` Manager with the name `entry_set`
+* On one-to-many relationships, you query the `many` Manager with the name `entry_set`.
+* `_set` will be overriden if a `related_name` was used on by the dependent model.
 ```python
 b = Blog.objects.get(id=1)
 b.entry_set.all() # Returns all Entry objects related to Blog.
