@@ -56,7 +56,7 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
 ```
-* Use model manager to create custom queries
+* Use model manager to create custom queries. The `use_for_related_fields` will make the Manager available on all relations that point to the model on which you defined this manager as the default manager.
 ```python
 from django.db imporot models
 from django.utils import timezone
@@ -76,14 +76,21 @@ class FlavorReview(models.Model):
     objects = PublishedManager()
 
 ```
-```python
 Usage:
+```python
 >>> from reviews.models import FlavorReview
 >>> FlavorReview.objects.count()
 3
 >>> FlavorReview.objects.published().count()
 1
 ```
+* When you constantly call a foreignkey on your queries, it might be best to add to override `get_queryset` and add `select_related` to it. To check if it really sped up queries, just count the milli seconds it took to finish the query for the django shell.
+```python
+class CountyManager(models.Manager):
+    def get_queryset(self):
+        return super(CountyManager, self).get_queryset().select_related('state')
+```
+
 ##urls.py
 * Don't reference views as strings in URLConfs. Adds magic methods and is hard to debug. Its also weird; define views explicitly.
 ```python
@@ -184,3 +191,4 @@ b = e.blog
 ##Source
 [http://www.twoscoopspress.com/](http://www.twoscoopspress.com/)<br/>
 [https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)
+[https://medium.com/@raiderrobert](https://medium.com/@raiderrobert)
