@@ -190,5 +190,5 @@ b = e.blog
 
 ##Source
 [http://www.twoscoopspress.com/](http://www.twoscoopspress.com/)<br/>
-[https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)
+[https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)<br/>
 [https://medium.com/@raiderrobert](https://medium.com/@raiderrobert)
