@@ -84,7 +84,7 @@ Usage:
 >>> FlavorReview.objects.published().count()
 1
 ```
-* When you constantly call a foreignkey on your queries, it might be best to add to override `get_queryset` and add `select_related` to it. To check if it really sped up queries, just count the milli seconds it took to finish the query for the django shell.
+* When you constantly call a foreignkey on your queries, it might be best to add to override `get_queryset` and add `select_related` to it. Count the number of queries if you want to check that it works. `select_related` only works for many-to-one relationships.
 ```python
 class CountyManager(models.Manager):
     def get_queryset(self):
@@ -167,7 +167,7 @@ ed.entry # Returns the related Entry object.
 e = Entry.objects.get(id=2)
 e.entrydetail # returns the related EntryDetail object
 ```
-* Use select_related lookup to lessen database queries.
+* Use `select_related` lookup to lessen database queries. `select_related` only works for many-to-one relationships.
 ```python
 '''Standard Lookup'''
 
