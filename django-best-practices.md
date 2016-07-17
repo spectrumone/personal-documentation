@@ -187,7 +187,15 @@ e = Entry.objects.select_related('blog').get(id=5)
 # in the previous query.
 b = e.blog
 ```
-
+* For many-to-many and one-to-many relationships, use `prefetch_related` related instead.
+```python
+Pizza.objects.all().prefetch_related('toppings')
+```
+Any subsequent chained methods which imply a different database query will ignore previously cached results, and retrieve data using a fresh database query. As such, dont do this:
+```python
+>>> pizzas = Pizza.objects.prefetch_related('toppings')
+>>> [list(pizza.toppings.filter(spicy=True)) for pizza in pizzas]
+```
 ##Source
 [http://www.twoscoopspress.com/](http://www.twoscoopspress.com/)<br/>
 [https://docs.djangoproject.com/en/1.9/](https://docs.djangoproject.com/en/1.9/)<br/>
