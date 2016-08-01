@@ -24,11 +24,11 @@ git commit push -f origin <commit hash>:<branch-name>
 ```
 reverts origin file to previous commit
 
-###Change branch-A to become exact replica of Branch-B (with history)
+###Change branch-A to become an exact replica of Branch-B (with history)
 ```bash
 (at branch B)$ git merge --strategy=ours branch-A
 (at branch A)$ git merge branch-B
 ```
-This will change branch A to completely loook like B but still with the history of both.
+This will change branch A to completely loook like B by adding just one merge commit but still with the history of both.
 
 
