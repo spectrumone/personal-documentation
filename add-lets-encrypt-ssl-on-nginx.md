@@ -1,5 +1,5 @@
 #Add Lets Encrypt SSL on NGINX
-<i> This guide is almost exactly the same as [this](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04) but with less words and solves a few bugs not mentioned there.</i>
+<i> This guide is almost exactly the same as [this](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04) but with less words to serve as a quick and solves a few deployment bugs not mentioned in the original guide.</i>
 
 ###1. Create an A record that points your domain to the public IP address of your server.
 Follow this guide if the domain was bought from namecheap.com: [https://www.namecheap.com/support/knowledgebase/article.aspx/319/78/how-can-i-setup-an-a-address-record-for-my-domain](https://www.namecheap.com/support/knowledgebase/article.aspx/319/78/how-can-i-setup-an-a-address-record-for-my-domain)
@@ -109,7 +109,7 @@ add_header X-Content-Type-Options nosniff;
 
 ssl_dhparam /etc/ssl/certs/dhparam.pem;
 ```
-* this config is from [https://cipherli.st/](https://cipherli.st/). The Config offers great but may not be compatible to older browers
+* this config is from [https://cipherli.st/](https://cipherli.st/). The Config offers great security but may not be compatible to older browers
 
 #### adjust the nginx configuration to use SSL
 ```bash
@@ -132,3 +132,43 @@ server {
     }
 }
 ```
+
+#### adjust the ufw firewall if ever youre using it
+```bash
+$ sudo ufw allow 'Nginx Full'
+$ sudo ufw delete allow 'Nginx HTTP'
+```
+which should look like this after..
+```bash
+$ sudo ufw status
+
+Output
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere
+Nginx Full                 ALLOW       Anywhere
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+Nginx Full (v6)            ALLOW       Anywhere (v6)
+```
+
+###7. Set Up Auto Renewal
+Let's Encrypt certs are valid for 90 days, but it's recommended that you renew the certs every 60 days to allow a margin of error. For good measure, we can try to renew every week.
+```bash
+$ sudo contrab -e
+```
+and inside the crontab file...
+```bash
+30 2 * * 1 /opt/letsencrypt/letsencrypt-auto renew >> /var/log/le-renew.log
+35 2 * * 1 /bin/systemctl reload nginx
+```
+
+###8. Update Let's Encrypt Client whenever there are any new updates
+```bash
+$ cd /opt/letsencrypt
+$ sudo git pull
+```
+
+###Conclusion
+That's it! Your web server is now using a free Let's Encrypt TLS/SSL certificate to securely serve HTTPS content.
