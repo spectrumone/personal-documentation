@@ -26,7 +26,8 @@ server {
     server_name .crescent-moon.tk; 
 ​
     # The default is 1mb which is believed to be reasonably high for non-upload use cases,
-    # and reasonably low to prevent DoS by uploading large files. Currently set to 4G which I think is bad.
+    # and reasonably low to prevent DoS by uploading large files. 
+    # Currently set to 4G which I think is bad.
     client_max_body_size 4G; 
 ​
     access_log /webapps/crescent_moon/logs/nginx-access.log;
