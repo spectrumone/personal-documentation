@@ -1,6 +1,6 @@
 Included here are notes to serve as guide on how NGINX works using Gunicorn as the web server. 
 
-TO DO:
+###TO DO:
 * update to a scenario where SSL is involved
 * update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 
@@ -21,7 +21,8 @@ server {
     listen   80;
     
     # This will only be considered if there are multiple server block directive lisening to 80.
-    # If nothing matches, nginx will get the first written server block or the one with a default_server.
+    # If nothing matches, nginx will get the first written server block or the one with a 
+    # default_server.
     server_name .crescent-moon.tk; 
 ​
     # The default is 1mb which is believed to be reasonably high for non-upload use cases,
@@ -36,12 +37,15 @@ server {
 # then it will look for the location block matching that.
 
 # Location matching priority is from longest to shortest prefix ex: 
-# http://localhost/static/example.png matches /static/ and / but since /static/ is longer then it will be matched first.
+# http://localhost/static/example.png matches /static/ and / but since /static/ is longer then 
+# it will be matched first.
 
 # Alias specifies the path to be called. ex: 
-# http://localhost/static/dog/cat/example.png will call /webapps/crescent_moon/static/dog/cat/example.png
+# http://localhost/static/dog/cat/example.png will call 
+# /webapps/crescent_moon/static/dog/cat/example.png
 
-# Root is the same as alias but it includes the location parameter part. ex: http://localhost/media/dog/cat/example.png 
+# Root is the same as alias but it includes the location parameter part. 
+# ex: http://localhost/media/dog/cat/example.png 
 # will call /webapps/crescent_moon/media/media/dog/cat/example.png
  
     location /static/ {
