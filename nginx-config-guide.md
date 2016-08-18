@@ -1,8 +1,11 @@
-Included here are notes to serve as guide on how NGINX works using Gunicorn as the web server. 
+#NGINX Sample Config Guide
+###Scenario:
+Nginx as a proxy server with Gunicorn as the web server.
 
 ###TO DO:
 * update to a scenario where SSL is involved
 * update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
+* add a scenario using uwsgi as the web server.
 
 ```bash
 upstream crescent_moon_app_server {
