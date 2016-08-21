@@ -1,6 +1,6 @@
 #NGINX Sample Config Guide
 ###Scenario:
-Nginx as a proxy server with Gunicorn as the web server.
+NGINX 1.9.5 as a proxy server with Gunicorn as the web server.
 
 ###Reference:
 * [https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#)
@@ -11,6 +11,7 @@ Nginx as a proxy server with Gunicorn as the web server.
 * update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 * add a scenario using uwsgi as the web server.
 
+### example.conf
 ```bash
 upstream example_app_server {
   # fail_timeout=0 means we always retry an upstream even if it failed
@@ -60,11 +61,14 @@ server {
     access_log /webapps/example_app/logs/nginx-access.log;
     error_log /webapps/example_app/logs/nginx-error.log;
     
+    # the NGINX webroot plugin works by placing a special file in the
+    # .well-known/acme-challenge/ used to request an SSL Certificate.
+    
     # The tilde instructs nginx to perform a case-sensitive regular expression match,
     # instead of a straight string comparison.
     root /var/www/html;
     location ^~ /.well-known/acme-challenge/ {
-        allow-all;
+        allow all;
     }
 
     # The default is 1mb which is believed to be reasonably high for non-upload use cases,
@@ -102,7 +106,7 @@ server {
 ​
         # The X-Forwarded-Proto request header helps you identify the protocol (HTTP or HTTPS)
         # that a client used to connect to your server.
-        # proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Proto https;
 ​
         # pass the Host: header from the client.
         proxy_set_header Host $host;
@@ -121,3 +125,40 @@ server {
         root /webapps/example_app/static/;
     }
 }
+```
+
+### snippets/ssl-example.com.conf
+```bash
+ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+```
+
+### snippets/ssl-params.conf
+from [https://cipherli.st/](https://cipherli.st/)
+```bash
+# from https://cipherli.st/
+# and https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
+
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
+ssl_ecdh_curve secp384r1;
+ssl_session_cache shared:SSL:10m;
+ssl_session_tickets off;
+ssl_stapling on;
+ssl_stapling_verify on;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+# Disable preloading HSTS for now.  You can use the commented out header line that includes
+# the "preload" directive if you understand the implications.
+#add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+add_header Strict-Transport-Security "max-age=63072000; includeSubdomains";
+add_header X-Frame-Options DENY;
+add_header X-Content-Type-Options nosniff;
+
+
+# This should be generate following this guide:
+# https://www.digitalocean.com/community/tutorials
+# /how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+ssl_dhparam /etc/ssl/certs/dhparam.pem;
+```
