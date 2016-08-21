@@ -10,7 +10,7 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server.
 
 ###TO DO:
 * ~~update to a scenario where SSL is involved~~
-* update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
+* ~~update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)~~
 * add a scenario using uwsgi as the web server.
 
 ### example.conf
@@ -24,7 +24,15 @@ upstream example_app_server {
   server unix:/webapps/example_app/run/gunicorn.sock fail_timeout=0; 
   
 }
-​
+
+upstream backend_hosts {
+    # Servers for load balancing. The current balancing algorithm
+    # is round robin but that can be modified.
+    server host1.example.com;
+    server host2.example.com;
+    server host3.example.com;
+}
+
 server {
 ​
     #will listen to requests from port 80. ex: 127:0.0.1:80
@@ -51,6 +59,8 @@ server {
 }
 
 server {
+    # ssl, by standard listens at port 443.
+    # http2 was just implemented on NGINX 1.9.5 so this will crash on lower versions.
     listen 443 ssl http2;
     include snippets/ssl-example.com.conf;
     include snippets/ssl-params.conf;
@@ -93,7 +103,6 @@ server {
     # Root is the same as alias but it includes the location parameter part. 
     # ex: http://localhost/media/dog/cat/example.png 
     # will call /webapps/example_app/media/media/dog/cat/example.png
- 
     location /static/ {
         alias   /webapps/example_app/static/;
     }
@@ -101,26 +110,39 @@ server {
     location /media/ {
         alias   /webapps/example_app/media/;
     }
-​
+
     location / {
         # Contains the IP address of the client.
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-​
+
+        # pass the Host: header from the client.
+        proxy_set_header HOST $host;
+ 
         # The X-Forwarded-Proto request header helps you identify the protocol (HTTP or HTTPS)
         # that a client used to connect to your server.
-        proxy_set_header X-Forwarded-Proto https;
-​
-        # pass the Host: header from the client.
-        proxy_set_header Host $host;
-​
-        # This checks if the request is not a request for a file.
-        if (!-f $request_filename) {
-            #proxy_pass redirects the request from 80 to the specified upstream.
-            proxy_pass http://example_app_server; 
-            break;
-        }
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # This is set to the IP address of the client so that the proxy can correctly make 
+        # decisions or log based on this information
+        proxy_set_Header X-Real-IP $remote_addr;
+
+        # If a request goes through multiple proxies, the clientIPAddress in the X-Forwarded-For
+        # request header is followed by the IP addresses of each successive proxy that the
+        # request goes through before it reaches your load balancer. Therefore, the right-most
+        # IP address is the IP address of the most recent proxy and the left-most IP address
+        # is the IP address of the originating client
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        #proxy_pass redirects the request from 80 to the specified upstream.
+        proxy_pass http://example_app_server; 
     }
-​
+    
+    # Sample location for load balancing proxied connections. Not sure if this should also
+    # have the X headers or that could be better set in the receiving servers.
+    location /proxy-me {
+        proxy_pass http://backend_hosts;
+    }
+
     # Error pages
     error_page 500 502 503 504 /500.html;
     location = /500.html {
