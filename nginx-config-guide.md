@@ -2,6 +2,10 @@
 ###Scenario:
 Nginx as a proxy server with Gunicorn as the web server.
 
+###Reference:
+* [https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#)
+* [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
+
 ###TO DO:
 * update to a scenario where SSL is involved
 * update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
@@ -27,6 +31,13 @@ server {
     # If nothing matches, nginx will get the first written server block or the one with a 
     # default_server.
     server_name .example.com www.example.com example.com;
+    
+    # Status 301 means that the resource (page) is moved permanently to a new location.
+    # The client/browser should not attempt to request the original location but use
+    # the new location from now on.
+    
+    # Status 302 means that the resource is temporarily located somewhere else,
+    # and the client/browser should continue requesting the original url.
     return 301 https://$server_name$request_uri;
 }
 
