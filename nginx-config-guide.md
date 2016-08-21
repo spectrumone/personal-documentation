@@ -59,7 +59,9 @@ server {
     
     access_log /webapps/example_app/logs/nginx-access.log;
     error_log /webapps/example_app/logs/nginx-error.log;
-  
+    
+    # The tilde instructs nginx to perform a case-sensitive regular expression match,
+    # instead of a straight string comparison.
     root /var/www/html;
     location ^~ /.well-known/acme-challenge/ {
         allow-all;
