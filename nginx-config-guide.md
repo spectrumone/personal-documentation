@@ -25,12 +25,15 @@ upstream example_app_server {
 server {
 ​
     #will listen to requests from port 80. ex: 127:0.0.1:80
-    listen   80;
+    listen 80;
     
     # This will only be considered if there are multiple server block directive lisening to 80.
     # If nothing matches, nginx will get the first written server block or the one with a 
     # default_server.
-    server_name .example.com www.example.com example.com;
+
+    # Optimize search by not using regex, and wildcard names without an asterisk
+    # http://nginx.org/en/docs/http/server_names.html
+    server_name example.com  www.example.com  *.example.com;
     
     # Status 301 means that the resource (page) is moved permanently to a new location.
     # The client/browser should not attempt to request the original location but use
@@ -38,6 +41,9 @@ server {
     
     # Status 302 means that the resource is temporarily located somewhere else,
     # and the client/browser should continue requesting the original url.
+    
+    # $server_name - name of the server which accepted the request.
+    # $request_uri - full original request URI (with arguments).
     return 301 https://$server_name$request_uri;
 }
 
