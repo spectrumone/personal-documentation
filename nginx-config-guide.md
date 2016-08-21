@@ -5,9 +5,10 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server.
 ###Reference:
 * [https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#)
 * [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
+* [https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
 ###TO DO:
-* update to a scenario where SSL is involved
+* ~~update to a scenario where SSL is involved~~
 * update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 * add a scenario using uwsgi as the web server.
 
