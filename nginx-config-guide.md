@@ -53,7 +53,8 @@ server {
     # Currently set to 4G which I think is bad.
     client_max_body_size 4G; 
 
-    # Nginx checks the uri of the request. if it has /static/ e.g.,  http://localhost/static/example.png, 
+    # Nginx checks the uri of the request. if it has /static/ e.g.,
+    # http://localhost/static/example.png, 
     # then it will look for the location block matching that.
   
     # Location matching priority is from longest to shortest prefix ex: 
