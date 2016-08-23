@@ -24,6 +24,9 @@ gzip_buffers 16 8k;
 gzip_http_version 1.1;
 gzip_min_length 256;
 gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript application/vnd.ms-fontobject application/x-font-ttf font/opentype image/svg+xml image/x-icon;
+
+# increase server name size if some of your domain names are really long
+server_names_hash_bucket_size 64;
 ...
 ```
 
@@ -208,3 +211,4 @@ ssl_dhparam /etc/ssl/certs/dhparam.pem;
 * [https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration](https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration)
 * [https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04)
 * [https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
+* [http://charles.lescampeurs.org/2008/11/14/fix-nginx-increase-server_names_hash_bucket_size](http://charles.lescampeurs.org/2008/11/14/fix-nginx-increase-server_names_hash_bucket_size)
