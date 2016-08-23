@@ -5,7 +5,7 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server. Load balancing im
 ###TO DO:
 * ~~update to a scenario where SSL is involved~~
 * ~~update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)~~
-* update to follow [https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration](https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration)
+* ~~update to follow [https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration](https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration)~~
 * ~~update to use [https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04)~~
 * add a scenario using uwsgi as the web server.
 
@@ -13,6 +13,13 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server. Load balancing im
 ### nginx.conf
 ```bash
 ...
+# worker_processes should be the same as the number of course of the server.
+worker_processes 1;
+
+# This means we can server 1024 clients/second. Please check what value this should be using
+# ulimit -n
+worker_connections 1024;
+
 # gzip files aside from html so it can be transferred faster to the client.
 # The client will handle the decompression. JPEG and PNG should not be
 # included for gzip since they are already compressed by nature.
