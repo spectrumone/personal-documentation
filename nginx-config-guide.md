@@ -136,6 +136,21 @@ server {
     }
 
     location / {
+        root /webapps/example_app/;
+        # first try if $uri exists, it not, then redirect to location
+        # @proxy
+        try_files $uri @proxy;
+        
+        location ~* .(jpg|jpeg|png|gif|ico|css|js)$ {
+            # Turn off logging for this location block.
+            access_log off;
+            # Add expire headers to requested files that don't change too much.
+            # max means itll expire at some date at 2037.
+            expires max;
+        }
+    }
+
+    location @proxy {
         # Contains the IP address of the client.
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
