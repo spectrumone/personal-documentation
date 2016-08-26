@@ -266,3 +266,4 @@ ssl_dhparam /etc/ssl/certs/dhparam.pem;
 * [https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04)
 * [https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
 * [http://charles.lescampeurs.org/2008/11/14/fix-nginx-increase-server_names_hash_bucket_size](http://charles.lescampeurs.org/2008/11/14/fix-nginx-increase-server_names_hash_bucket_size)
+* [http://uwsgi-docs.readthedocs.io/en/latest/Nginx.html](http://uwsgi-docs.readthedocs.io/en/latest/Nginx.html)
