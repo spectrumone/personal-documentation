@@ -7,7 +7,7 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server. Load balancing im
 * ~~update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)~~
 * ~~update to follow [https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration](https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration)~~
 * ~~update to use [https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04)~~
-* ~add a scenario using uwsgi as the web server.~
+* ~~add a scenario using uwsgi as the web server.~~
 
 
 ### nginx.conf
