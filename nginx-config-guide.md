@@ -1,14 +1,10 @@
 #NGINX Sample Config Guide
 ###Scenario:
-NGINX 1.9.5 as a proxy server with Gunicorn as the web server. Load balancing implemented but only for a certain path.
-
-###TO DO:
-* ~~update to a scenario where SSL is involved~~
-* ~~update to a scenario that involves load balancing [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)~~
-* ~~update to follow [https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration](https://www.digitalocean.com/community/tutorials/how-to-optimize-nginx-configuration)~~
-* ~~update to use [https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04](https://www.digitalocean.com/community/tutorials/how-to-add-the-gzip-module-to-nginx-on-ubuntu-14-04)~~
-* ~~add a scenario using uwsgi as the web server.~~
-
+NGINX 1.9.5 as a proxy server with Gunicorn as the web server with the following:
+* SSL
+* Load Balancing Scenario
+* uWSGI as a web server
+* GeoIP (make sure you have `--with-http_geoip_module` by checking `nginx -V`
 
 ### nginx.conf
 ```bash
@@ -39,6 +35,11 @@ server_names_hash_bucket_size 64;
 
 ### example.conf
 ```bash
+
+
+geoip_country /usr/share/GeoIP/GeoIP.dat;
+geoip_city /usr/share/GeoIP/GeoLiteCity.dat;
+
 upstream example_app_server {
   # fail_timeout=0 means we always retry an upstream even if it failed
   # to return a good HTTP response (in case the Unicorn master nukes a
