@@ -1,7 +1,7 @@
 #NGINX Sample Config Guide
 ###Scenario:
 NGINX 1.9.5 as a proxy server with Gunicorn as the web server with the following:
-* SSL
+* HTTPS
 * Load Balancing Scenario
 * uWSGI as a web server
 * GeoIP (make sure you have `--with-http_geoip_module` by checking `nginx -V`
@@ -35,8 +35,7 @@ server_names_hash_bucket_size 64;
 
 ### example.conf
 ```bash
-
-
+# download GeoIP database from http://geolite.maxmind.com
 geoip_country /usr/share/GeoIP/GeoIP.dat;
 geoip_city /usr/share/GeoIP/GeoLiteCity.dat;
 
@@ -177,6 +176,9 @@ server {
         # is the IP address of the originating client
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
+        # two-letter country code, for example, RU, US.
+        proxy_set_header GEOIP_COUNTRY_CODE $geoip_country_code;
+
         #proxy_pass redirects the request from 80 to the specified upstream.
         proxy_pass http://example_app_server; 
     }
@@ -259,6 +261,7 @@ ssl_dhparam /etc/ssl/certs/dhparam.pem;
 ```
 
 ###Reference:
+* [https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/](https://www.howtoforge.com/tutorial/how-to-use-geoip-with-nginx-on-ubuntu-16.04/)
 * [https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/#)
 * [https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching](https://www.digitalocean.com/community/tutorials/understanding-nginx-http-proxying-load-balancing-buffering-and-caching)
 * [https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
