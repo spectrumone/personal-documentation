@@ -36,8 +36,8 @@ server_names_hash_bucket_size 64;
 ### example.conf
 ```bash
 # download GeoIP database from http://geolite.maxmind.com
-geoip_country /usr/share/GeoIP/GeoIP.dat;
-geoip_city /usr/share/GeoIP/GeoLiteCity.dat;
+geoip_country /etc/nginx/geoip/GeoIP.dat;
+geoip_city /etc/nginx/geoip/GeoLiteCity.dat;
 
 upstream example_app_server {
   # fail_timeout=0 means we always retry an upstream even if it failed
