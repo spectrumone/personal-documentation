@@ -92,7 +92,7 @@ class CountyManager(models.Manager):
 ```
 
 ##urls.py
-* Don't reference views as strings in URLConfs. Adds magic methods and is hard to debug. Its also weird; define views explicitly.
+* Don't reference views as strings in URLConfs. Adds magic methods and is hard to debug.
 ```python
 from django.conf.urls import url
 
@@ -102,6 +102,10 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
 ]
 ```
+
+##forms.py
+* On creating User Authentication forms, its better to check first `django.contrib.auth.forms`.
+
 ##views.py
 * use **transanctions** whenever creating, updating, or deleting something from the database. This maintains database integrity.
 ```python
