@@ -1,5 +1,5 @@
 #Add Lets Encrypt SSL on NGINX
-<i> This guide is almost exactly the same as [this](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04) but with less words to serve as quick reference and solves a few deployment bugs not mentioned in the original guide.</i>
+<i>basef from [this](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04</i>
 
 ###1. Create an A record that points your domain to the public IP address of your server.
 Follow this guide if the domain was bought from namecheap.com: [https://www.namecheap.com/support/knowledgebase/article.aspx/319/78/how-can-i-setup-an-a-address-record-for-my-domain](https://www.namecheap.com/support/knowledgebase/article.aspx/319/78/how-can-i-setup-an-a-address-record-for-my-domain)
