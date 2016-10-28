@@ -4,7 +4,7 @@
 ###Rolling back to previous migrations
 ```bash
 ./manage.py migrate <app name> -l #this will show you the migration logs
-./manage.py migrate <app name> 0034 #roll back to all specified migration
+./manage.py migrate <app name> 0034 #roll back to a specified migration
 ```
 * Sometimes this will not work as there are migrations that for some reason, can't be rolled back. An example would be data migrations.
 
