@@ -13,5 +13,5 @@
 ./manage.py migrate <app name> -l
 ./manage.py migrate --fake <app name> 0010
 ./manage.py migrate <app name> 0011 #run the migration you want to rerun
-./manage.py migrate --fake <app name> migrate 0020 #assume this is the latest migration
+./manage.py migrate --fake <app name> 0020 #assume this is the latest migration
 ```
