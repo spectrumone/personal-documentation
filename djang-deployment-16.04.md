@@ -59,13 +59,15 @@ git clone <ssh url of project>
 ```
 run collectstatic. This will be used by nginx later.
 
+Also make sure to add ip address of the remote server to the `ALLOWED_HOSTS` of Django.
+
 ###Create a Gunicorn systemd Service File
 Create and open a systemd service file for Gunicorn with sudo privileges in your text editor:
 `sudo nano /etc/systemd/system/gunicorn.service`
 ```bash
 [Unit]
 Description=gunicorn daemon
-After=network.target #tell the init system to only start this after the networking target has been reached
+After=network.target #tell init system to only start this after the networking target has been reached
 
 [Service]
 # our regular user account ownership of the process since it owns all of the relevant files.
@@ -80,4 +82,43 @@ ExecStart=/home/username/myproject/myprojectenv/bin/gunicorn --workers 3 --bind 
 # This will tell systemd what to link this service to if we enable it to start at boot.
 # We want this service to start when the regular multi-user system is up and running
 WantedBy=multi-user.target
+```
+start the Gunicorn service we created and enable it so that it starts at boot:
+```bash
+sudo systemctl start gunicorn
+sudo systemctl enable gunicorn
+```
+###Setup NGINX
+on `etc/nginx/sites-available/`: `sudo nano <config name preferrably url of site>`
+```bash
+server {
+  listen 80;
+  server_name example.com  www.example.com  *.example.com;
+  
+  # my preference is to add all logs (celery, gunicorn, etc..) in one folder.
+  access_log /var/log/example/nginx-access.log;
+  error_log /var/log/example/nginx-error.log;
+
+  location = /favicon.ico { access_log off; log_not_found off; }
+  location /static/ {
+      alias   /home/username/projectname/staticfiles/; # folder of collectstatic 
+  }
+
+  location /media/ {
+      alias   /home/username/projectname/media/;
+  }
+
+  location / {
+      include proxy_params;
+      proxy_pass http://unix:/home/username/projectname/projectname.sock;
+  }
+}
+```
+create symbolic link to `/etc/nginx/sites-enabled/`: `sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled`
+
+check config, restart, and allow nginx on the firewall:
+```bash
+sudo nginx -t
+sudo systemctl restart nginx
+sudo ufw allow 'Nginx Full'
 ```
