@@ -18,11 +18,16 @@ git commit --amend --date=now
 ```bash
 git reset --hard <commit hash>
 ```
-this will change all the files back to how they use to be on specified commit. It won't delete files however.
+
+###Update remote to be the same as local
 ```bash
-git commit push -f origin <commit hash>:<branch-name>
+git push -f origin <branch name>
 ```
-reverts origin file to previous commit
+###Reset local to be the same as origin
+```bash
+git reset --hard origin/<branch name>
+```
+* do this after fetch
 
 ###Change branch-A to become an exact replica of Branch-B (with history)
 ```bash
@@ -30,5 +35,3 @@ reverts origin file to previous commit
 (at branch A)$ git merge branch-B
 ```
 This will change branch A to completely loook like B by adding just one merge commit but still with the history of both.
-
-
