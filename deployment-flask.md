@@ -43,7 +43,7 @@ Connecting to your own database should be as easy as ```psql``` now.
 
 To access gain access on a local database without it asking for username and password:
 
-1. access the **pg_hba.conf** file:  ```sudo nano /etc/postgresql/9.3/main/pg_hba.conf``
+1. access the **pg_hba.conf** file:  ```sudo nano /etc/postgresql/9.3/main/pg_hba.conf```
 2. change the line:
 ```
 # Database administrative login by Unix domain socket
