@@ -57,9 +57,9 @@ Add `id_rsa.pub` to the either git or bitbucket account where project is hosted.
 ```bash
 git clone <ssh url of project>
 ```
-run collectstatic. This will be used by nginx later.
-
-Also make sure to add ip address of the remote server to the `ALLOWED_HOSTS` of Django.
+* run collectstatic. This will be used by nginx later.
+* add IP address of the remote server to the `ALLOWED_HOSTS` of Django.
+* connect created to django settings.
 
 ###Create a Gunicorn systemd Service File
 Create and open a systemd service file for Gunicorn with sudo privileges in your text editor:
