@@ -9,7 +9,7 @@ NGINX 1.9.5 as a proxy server with Gunicorn as the web server with the following
 ### nginx.conf
 ```bash
 ...
-# worker_processes should be the same as the number of course of the server.
+# worker_processes should be the same as the number of cores of the server. (interim standard)
 worker_processes 1;
 
 # This means we can server 1024 clients/second. Please check what value this should be using
