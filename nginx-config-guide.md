@@ -167,7 +167,7 @@ server {
 
         # This is set to the IP address of the client so that the proxy can correctly make 
         # decisions or log based on this information
-        proxy_set_Header X-Real-IP $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
 
         # If a request goes through multiple proxies, the clientIPAddress in the X-Forwarded-For
         # request header is followed by the IP addresses of each successive proxy that the
