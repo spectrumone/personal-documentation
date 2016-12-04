@@ -30,7 +30,7 @@ psql <new db name> < <outfile>
 ```
 This only works if the current user is the correct db owner (If the current ubuntu user has the same name as the db user that owns the postgres db. If not, run `sudo su - postgres` to turn the curent user the  postgres root superuser.
 
-###Backup and restore dump to a new database (Django methods)
+###Backup and restore dump to a new database (Django method)
 ```bash
 ./manage.py dumpdata -o <outfile>
 ```
